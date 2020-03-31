@@ -1,10 +1,7 @@
-
-
 import random
 import time
 class Car:
     def __init__(self):
-        super().__init__()
         self.angle = 0
         self.speed = 0
         self.distance = 0.
@@ -12,49 +9,46 @@ class Car:
     def act(self,event,angl):
         event.run(angl)
 
-class turn_left:
+class TurnLeft:
     def run(self,angl):
         angl.angle -= random.randint(0,20)
-        #print("turn left, current angle: "+str(angl.angle))
         angl.time += 1
         angl.distance +=  angl.speed
 
-class turn_right:
+class TurnRight:
     def run(self,angl):
         angl.angle += random.randint(0,20)
-        #print("turn right,current angle: "+str(angl.angle))
         angl.time += 1
         angl.distance +=  angl.speed
 
-class up_speed:
+class SpeedUp:
       def run(self,angl):
             angl.speed += random.randint(0,20)    
-            #print("speed up: current speed: "+str(angl.speed))
             angl.time += 1
             angl.distance +=  angl.speed
 
-class down_speed:
+class SpeedDown:
       def run(self,angl):
             angl.speed -= random.randint(0,20)
-            #print("speed down: current speed: "+str(angl.speed))
             angl.time += 1
             angl.distance +=  angl.speed
 
 
-left = turn_left()
-right = turn_right()
-up = up_speed()
-down = down_speed()
+left = TurnLeft()
+right = TurnRight()
+up = SpeedUp()
+down = SpeedDown()
 car1 = Car()
 temp = [left,right,up,down]
-print("if you want to stop, press : ctrl + c ")
-while True:
-    #run= int(input("press 1 to run/ 0 to stop: "))
+file = open("Output.txt","w")
+if __name__ =="__main__":
+    print("if you want to stop, press : ctrl + c ")
+    while True:
+        active = random.randint(0,3)
+        car1.act(temp[active],car1)
+        print("speed: {} m/s angle: {} distance: {}".format(str(car1.speed),str(car1.angle),str(car1.distance)))
+        file.write("speed: {} m/s angle: {} distance: {} \n".format(str(car1.speed),str(car1.angle),str(car1.distance)))
+        time.sleep(1)
     
-    active = random.randint(0,3)
-    car1.act(temp[active],car1)
-    print("speed: "+str(car1.speed)+"m/s angle: "+str(car1.angle)+ " distance: "+str(car1.distance))
-    time.sleep(1)
-
 
 
